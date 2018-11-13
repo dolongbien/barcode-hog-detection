@@ -7,7 +7,7 @@ class Detection:
     def __init__(self, model, scaler=None):
         self.model = model
         self.scaler = scaler
-        self.result: tuple = None
+        self.barcode: np.ndarray = None
 
     def detect(self, image: np.ndarray, window_size: tuple, orientation: int, pixels_per_cell: tuple, cells_per_block: tuple, threshold_proba=0.90, threshold_overlap=0.3) -> list:
         boxes = []
@@ -40,9 +40,10 @@ class Detection:
         y1: int = np.min(boxes_surpressed[:, 1])
         x2: int = np.max(boxes_surpressed[:, 2])
         y2: int = np.max(boxes_surpressed[:, 3])
-        self.result: tuple = (x1, y1, x2, y2)
 
-        return self.result
+        barcode: np.ndarray = image[y1:y2, x1:x2, :]
+        self.barcode = barcode
+        return self.barcode
 
     def __non_max_surpression(self, boxes: np.ndarray, overlapThresh: int, use_proba=True):
         # if there are no boxes, return an empty list

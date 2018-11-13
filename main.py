@@ -28,7 +28,7 @@ if __name__ == "__main__":
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     detect = Detection(model, scaler)
-    x1, y1, x2, y2 = detect.detect(image, window_size=(150, 250), orientation=180,
+    # Detected barcode image
+    barcode: np.ndarray = detect.detect(image, window_size=(150, 250), orientation=180,
                                     pixels_per_cell=(150, 250), cells_per_block=(1, 1),
                                     threshold_proba=0.98, threshold_overlap=0.15)
-
